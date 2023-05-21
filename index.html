@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Medidas de Tendencia Central</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="./resources/jquery/dist/jquery.min.js"></script>
+  <script src="./resources/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="./functionality.js"></script>
+  <link rel="stylesheet" href="./resources/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    *{
+        --nav-bar: #343653;
+        --primary: #e3e3e3;
+        --secondary: #090b2f;
+        --primary-button: #ff4751;
+        --secondary-button: #468dc3;
+        --accent: #0040ff;
+        
+
+    }
+    body {
+        background-color: var(--secondary);
+        color: var(--primary);
+
+    }
+
+    .footer, .header {
+        background-color: var(--nav-bar);
+        height: fit-content;
+        width: 100%;
+        margin: 0px;
+        position: initial;
+    }
+    .header{
+        margin: auto;
+        margin-top: 10px;
+        width: 90%;
+        border-radius: 20px;
+    }
+    .footer{
+        position: absolute;
+        bottom: 0;
+    }
+    .content {
+        height: 100%;
+        margin: 0px;
+    }
+
+    #form {
+        padding: 10px;
+    }
+
+    .inputGroup{
+        align-items: center;
+        padding: 0;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+    input {
+        padding: 10px;
+        border-radius: 15px;
+        background-color: var(--primary);
+        color: var(--secondary);
+    }
+    #Calcular {
+        width: 35%;
+        margin: auto;
+    }
+    label{
+        font-weight: bolder;
+    }
+    #values{
+        max-width: 100%;
+        word-wrap: break-word;
+    }
+
+    .table-container>table{
+        color: var(--primary);
+        overflow-x: auto; margin: 5px
+    }
+    .cell-container{
+        width: 100px;
+    }
+    p{
+        font-weight: bold;
+        color: var(--primary);
+    }
+  </style>
+  <script>
+    var values;
+    var limit2;
+    var limit3;
+    var pattern = /^[0-9,]+$/;
+    var html = "";
+
+    $(document).ready(function () {
+        
+
+        $("#Calcular").click(function () {
+            if ($("#values").val() != "" && $("#Momento2").val() != 0 && $("#Momento3").val() != 0 && pattern.test($("#values").val())) {
+                $("#Calcular").prop("disabled", true);
+                values = $("#values").val().split(",").map(Number);
+                limit2 = Number($("#Momento2").val());
+                limit3 = Number($("#Momento3").val());
+                Start(values, limit2, limit3);
+                $("#form").css("display", "none");
+                $("#result").css("display", "");
+                ShowResults();
+            } else {
+                alert("Revisa los datos, pusiste algo mal:\n\n El recuadro de valores debe contener los valores a calcular separados por comas (deben estar separados por comas y no puede haber letras)\n\n 'Momento 2 hasta' y 'Momento 3 hasta' deben tener los valores hasta los cuales se calcularan los momentos (no pueden ser 0)");
+            }
+        });
+
+    });
+
+    const getValueFromArray = (arr, i) => arr[i] !== undefined ? arr[i] : '';
+
+    function ShowResults() {
+        $("#n").text("N = " + n);        
+        $("#rango").text("Rango = " + RangeF);
+        $("#c").text("Clase = " + ClaseF);
+        $("#ic").text("Indice Clase = " + IcF);
+        $("#X").text("Media Aritmetica = " + MediaF);
+        $("#Me").text("Mediana = " + MedianaF);
+        $("#Dx").text("Desviacion Media Arit = " + DxF);
+        $("#DMe").text("Desviacion Mediana = " + DMeF);
+        $("#Varianza").text("Varianza = " + VarianzaF);
+        $("#DTipica").text("Desviacion Tipica = " + DTipicaF);
+        $("#Mom1").text("Momento 1 = " + Momento1F);
+        $("#Mom2").text("Momento 2," + limit2 + " = " + Momento2F);
+        $("#Mom3").text("Momento 3," + limit3 + " = " + Momento3F);
+        $("#Delta1").text("Delta 1 = " + Delta1F);
+        $("#Delta2").text("Delta 2 = " + Delta2F);
+        $("#Sesgo").text("Sesgo = " + SesgoF);
+        for(let i = 0; i < clases.length; i++) {
+            html += "<tr><td>" + clases[i] + "</td><td>" + Xi[i] + "</td><td>" + fi[i] + "</td><td>" + Fi[i] + "</td><td>" + Xifi[i] + "</td><td>" + XiDiffXAbs[i] + "</td><td>" + fi_XiDiffXAbs[i] + "</td><td>" + XiDiffMeAbs[i] + "</td><td>" + fi_XiDiffMeAbs[i] + "</td><td>" + XiDiffXAbsSq[i] + "</td><td>" + fi_XiDiffXAbsSq[i] + "</td><td>" + getValueFromArray(XiSq, i) + "</td><td>" + getValueFromArray(fi_XiSq, i) + "</td><td>" + getValueFromArray(XiCube, i) + "</td><td>" + getValueFromArray(fi_XiCube, i) + "</td></tr>";
+        }
+        $("#info").html(html);
+        
+    }
+
+
+
+  </script>
+</head>
+<body>
+    <div class="row header">
+        <div class="col" style="display: flex;align-items: center;">
+            <h1 style="margin: 5px;">Medidas de tendencia Central</h1>
+        </div>
+    </div>
+    <div class="row content">    
+        <div class="col">
+            <div class="row" id="form">
+                    <div class="row inputGroup">
+                        <label for="values">Valores:</label>
+                        <input type="text" name="values" id="values" placeholder="ej: 5,6,7,23,54,123,122">
+                    </div>
+                    <div class="row inputGroup">
+                        <div class="col-sm" style="width: 45%;margin: auto;">
+                            <div class="row">
+                                <label for="Momento2">Momento 2 Hasta:</label>
+                            </div>
+                            <div class="row">
+                                <input type="number" name="Momento2" id="Momento2" value="0">
+                            </div>
+                        </div>
+                        <div class="col-sm" style="width: 45%;margin: auto;">
+                            <div class="row">
+                                <label for="Momento3">Momento 3 Hasta:</label>
+                            </div>
+                            <div class="row">
+                                <input type="number" name="Momento3" id="Momento3" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row inputGroup">
+                        <input id="Calcular" type="button" value="Calcular">
+                    </div>
+                </form>
+            </div>
+            <div id="result" class="row " style="width: fit-content; display: none; margin: 5px;">
+                <div class="col">
+                    <div class="row datos">
+                        <p id="n"></p>
+                        <p id="rango"></p>
+                        <p id="c"></p>
+                        <p id="ic"></p>
+                        <p id="X"></p>
+                        <p id="Me"></p>
+                        <p id="Dx"></p>
+                        <p id="DMe"></p>
+                        <p id="Varianza"></p>
+                        <p id="DTipica"></p>
+                        <p id="Mom1"></p>
+                        <p id="Mom2"></p>
+                        <p id="Mom3"></p>
+                        <p id="Delta1"></p>
+                        <p id="Delta2"></p>
+                        <p id="Sesgo"></p>
+                    </div>
+                    <div class="row table-container">
+                        <table class="table table-bordered">
+                            <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>Clases</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>Xi</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>fi</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>Fi</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>Xifi</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>|Xi - X|</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>fi|Xi - X|</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>|Xi - Me|</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>fi|Xi - Me|</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>|Xi - X|²</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>fi|Xi - X|²</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>Xi²</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>fiXi²</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>Xi³</p>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="cell-container">
+                                                <p>fiXi³</p>
+                                            </div>
+                                        </th>
+                                    </tr>
+                            </thead>
+                            <tbody id="info">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
