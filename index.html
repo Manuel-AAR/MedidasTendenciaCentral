@@ -1,94 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Medidas de Tendencia Central</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="./resources/jquery/dist/jquery.min.js"></script>
-  <script src="./resources/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="./functionality.js"></script>
-  <link rel="stylesheet" href="./resources/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
-  <style>
-
-    *{
-        --nav-bar: #343653;
-        --primary: #e3e3e3;
-        --secondary: #090b2f;
-        --primary-button: #ff4751;
-        --secondary-button: #468dc3;
-        --accent: #0040ff;
-        
-
-    }
-    body {
-        background-color: var(--secondary);
-        color: var(--primary);
-
-    }
-
-    .footer, .header {
-        background-color: var(--nav-bar);
-        height: fit-content;
-        width: 100%;
-        margin: 0px;
-        position: initial;
-    }
-    .header{
-        margin: auto;
-        margin-top: 10px;
-        width: 90%;
-        border-radius: 20px;
-    }
-    .footer{
-        position: absolute;
-        bottom: 0;
-    }
-    .content {
-        height: 100%;
-        margin: 0px;
-    }
-
-    #form {
-        padding: 10px;
-    }
-
-    .inputGroup{
-        align-items: center;
-        padding: 0;
-        margin: auto;
-        margin-bottom: 20px;
-    }
-    input {
-        padding: 10px;
-        border-radius: 15px;
-        background-color: var(--primary);
-        color: var(--secondary);
-    }
-    #Calcular {
-        width: 35%;
-        margin: auto;
-    }
-    label{
-        font-weight: bolder;
-    }
-    #values{
-        max-width: 100%;
-        word-wrap: break-word;
-    }
-
-    .table-container>table{
-        color: var(--primary);
-        overflow-x: auto; margin: 5px
-    }
-    .cell-container{
-        width: 100px;
-    }
-    p{
-        font-weight: bold;
-        color: var(--primary);
-    }
-  </style>
+    <title>Medidas de Tendencia Central</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./resources/jquery/dist/jquery.min.js"></script>
+    <script src="./resources/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./functionality.js"></script>
+    <link rel="stylesheet" href="./resources/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>
     var values;
     var limit2;
@@ -118,23 +40,122 @@
 
     const getValueFromArray = (arr, i) => arr[i] !== undefined ? arr[i] : '';
 
+    function ShowFormulas() {
+        let elemento = document.getElementById("n");
+        let LaTex = "\N="+n;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("rango");
+        LaTex = "\ r="+RangeF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("c");
+        LaTex = "\ c="+ClaseF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("ic");
+        LaTex = "\ Ic="+IcF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("X");
+        LaTex = "\ X="+MediaF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("Me");
+        LaTex = "\ Me="+MedianaF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("Dx");
+        LaTex = "\ Dx="+DxF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("DMe");
+        LaTex = "\ DMe="+DMeF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("Varianza");
+        LaTex = "\ \\sigma^2="+VarianzaF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("DTipica");
+        LaTex = "\ \\sigma="+DTipicaF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("Mom1");
+        LaTex = "\ M_1="+Momento1F;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("Mom2");
+        LaTex = "\ M_2,_" + limit2 + "=" +Momento2F;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("Mom3");
+        LaTex = "\ M_3,_" + limit3 + "=" +Momento3F;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("Delta1");
+        LaTex = "\ \\varDelta_1=" +Delta1F;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("Delta2");
+        LaTex = "\ \\varDelta_2=" +Delta2F;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+        elemento = document.getElementById("Sesgo");
+        LaTex = "\ Se=" +SesgoF;
+        katex.render(LaTex, elemento, {
+            throwOnError: false,
+            displayMode: true,
+            fontSize: 5
+        });
+    }
     function ShowResults() {
-        $("#n").text("N = " + n);        
-        $("#rango").text("Rango = " + RangeF);
-        $("#c").text("Clase = " + ClaseF);
-        $("#ic").text("Indice Clase = " + IcF);
-        $("#X").text("Media Aritmetica = " + MediaF);
-        $("#Me").text("Mediana = " + MedianaF);
-        $("#Dx").text("Desviacion Media Arit = " + DxF);
-        $("#DMe").text("Desviacion Mediana = " + DMeF);
-        $("#Varianza").text("Varianza = " + VarianzaF);
-        $("#DTipica").text("Desviacion Tipica = " + DTipicaF);
-        $("#Mom1").text("Momento 1 = " + Momento1F);
-        $("#Mom2").text("Momento 2," + limit2 + " = " + Momento2F);
-        $("#Mom3").text("Momento 3," + limit3 + " = " + Momento3F);
-        $("#Delta1").text("Delta 1 = " + Delta1F);
-        $("#Delta2").text("Delta 2 = " + Delta2F);
-        $("#Sesgo").text("Sesgo = " + SesgoF);
+        ShowFormulas();
         for(let i = 0; i < clases.length; i++) {
             html += "<tr><td>" + clases[i] + "</td><td>" + Xi[i] + "</td><td>" + fi[i] + "</td><td>" + Fi[i] + "</td><td>" + Xifi[i] + "</td><td>" + XiDiffXAbs[i] + "</td><td>" + fi_XiDiffXAbs[i] + "</td><td>" + XiDiffMeAbs[i] + "</td><td>" + fi_XiDiffMeAbs[i] + "</td><td>" + XiDiffXAbsSq[i] + "</td><td>" + fi_XiDiffXAbsSq[i] + "</td><td>" + getValueFromArray(XiSq, i) + "</td><td>" + getValueFromArray(fi_XiSq, i) + "</td><td>" + getValueFromArray(XiCube, i) + "</td><td>" + getValueFromArray(fi_XiCube, i) + "</td></tr>";
         }
@@ -150,17 +171,18 @@
     <div class="row header">
         <div class="col" style="display: flex;align-items: center;">
             <h1 style="margin: 5px;">Medidas de tendencia Central</h1>
+            
         </div>
     </div>
     <div class="row content">    
-        <div class="col">
+        <div class="col" style="padding: 0;">
             <div class="row" id="form">
                     <div class="row inputGroup">
-                        <label for="values">Valores:</label>
-                        <input type="text" name="values" id="values" placeholder="ej: 5,6,7,23,54,123,122">
+                        <label for="values" style="width: 90%;margin-left: 5%;margin-right: 5%;">Valores:</label>
+                        <textarea name="values" id="values" placeholder="ej: 5,6,7,23,54,123,122" rows="4"></textarea>
                     </div>
                     <div class="row inputGroup">
-                        <div class="col-sm" style="width: 45%;margin: auto;">
+                        <div class="col-sm" style="width: 42.5%;margin-left: 5%;">
                             <div class="row">
                                 <label for="Momento2">Momento 2 Hasta:</label>
                             </div>
@@ -168,7 +190,7 @@
                                 <input type="number" name="Momento2" id="Momento2" value="0">
                             </div>
                         </div>
-                        <div class="col-sm" style="width: 45%;margin: auto;">
+                        <div class="col-sm" style="width: 42.5%;margin-left: 5%;margin-right: 5%;">
                             <div class="row">
                                 <label for="Momento3">Momento 3 Hasta:</label>
                             </div>
@@ -182,25 +204,25 @@
                     </div>
                 </form>
             </div>
-            <div id="result" class="row " style="width: fit-content; display: none; margin: 5px;">
+            <div id="result" class="row " style="width: 100vw; display: none; margin: 0;">
                 <div class="col">
                     <div class="row datos">
-                        <p id="n"></p>
-                        <p id="rango"></p>
-                        <p id="c"></p>
-                        <p id="ic"></p>
-                        <p id="X"></p>
-                        <p id="Me"></p>
-                        <p id="Dx"></p>
-                        <p id="DMe"></p>
-                        <p id="Varianza"></p>
-                        <p id="DTipica"></p>
-                        <p id="Mom1"></p>
-                        <p id="Mom2"></p>
-                        <p id="Mom3"></p>
-                        <p id="Delta1"></p>
-                        <p id="Delta2"></p>
-                        <p id="Sesgo"></p>
+                        <div id="n"></div>
+                        <div id="rango"></div>
+                        <div id="c"></div>
+                        <div id="ic"></div>
+                        <div id="X"></div>
+                        <div id="Me"></div>
+                        <div id="Dx"></div>
+                        <div id="DMe"></div>
+                        <div id="Varianza"></div>
+                        <div id="DTipica"></div>
+                        <div id="Mom1"></div>
+                        <div id="Mom2"></div>
+                        <div id="Mom3"></div>
+                        <div id="Delta1"></div>
+                        <div id="Delta2"></div>
+                        <div id="Sesgo"></div>
                     </div>
                     <div class="row table-container">
                         <table class="table table-bordered">
@@ -212,27 +234,27 @@
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="cell-container">
+                                            <div class="cell-container" style="width:20px;">
                                                 <p>Xi</p>
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="cell-container">
+                                            <div class="cell-container" style="width:20px;">
                                                 <p>fi</p>
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="cell-container">
+                                            <div class="cell-container" style="width:20px;">
                                                 <p>Fi</p>
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="cell-container">
+                                            <div class="cell-container" style="width:30px;">
                                                 <p>Xifi</p>
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="cell-container">
+                                            <div class="cell-container" style="width:55px;">
                                                 <p>|Xi - X|</p>
                                             </div>
                                         </th>
@@ -262,22 +284,22 @@
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="cell-container">
+                                            <div class="cell-container" style="width:30px;">
                                                 <p>Xi²</p>
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="cell-container">
+                                            <div class="cell-container" style="width:40px;">
                                                 <p>fiXi²</p>
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="cell-container">
+                                            <div class="cell-container" style="width:30px;">
                                                 <p>Xi³</p>
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="cell-container">
+                                            <div class="cell-container" style="width:40px;">
                                                 <p>fiXi³</p>
                                             </div>
                                         </th>
@@ -291,6 +313,9 @@
                 
             </div>
         </div>
+    </div>
+    <div class="row footer">
+        
     </div>
 </body>
 </html>

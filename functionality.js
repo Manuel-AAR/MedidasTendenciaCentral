@@ -17,7 +17,7 @@ var XiDiffMeAbs = [], fi_XiDiffMeAbs = []; //XiDiffMeAbs = |Xi - Me|, fi_XiDiffM
 //formulas string
 var RangeF = "", ClaseF = "", IcF = "", MediaF = "", MedianaF = "", MoF = "";
 var DxF = "", DMeF = "", VarianzaF = "", DTipicaF = "";
-var Momento1F = "", Momento2F = "", Delta1F = "", Delta2F = "", SesgoF = "";
+var Momento1F = "", Momento2F = "", Momento3F = "", Delta1F = "", Delta2F = "", SesgoF = "";
 
 //funciones
 function Ordenar() {
@@ -38,13 +38,13 @@ function GetRango() {
 function GetClase() {
     let temp = Math.round(Math.sqrt(n)*100)/100;
     c = Math.round(temp);
-    ClaseF = "√" + n.toString() + " = " + temp.toString() + " = " + c.toString();
+    ClaseF = "\\sqrt{" + n.toString() + "} = " + temp.toString() + " = " + c.toString();
 }
 
 function GetIndiceClase() {
     let temp = Math.round((r/c)*100)/100;
     ic = Math.round(temp);
-    IcF = r.toString() + "/" + c.toString() + " = " + temp.toString() + " = " + ic.toString();
+    IcF = "\\frac{"+ r.toString() + "}{" + c.toString() + "} = " + temp.toString() + " = " + ic.toString();
 }
 
 function GetSinRepetir() {
@@ -98,7 +98,7 @@ function GetXifi() {
 function GetMedia() {
     let temp = Xifi.reduce(function(acc, current) {return acc + current;}, 0);
     X = Math.round((temp/n)*100)/100;
-    MediaF = temp.toString() + "/" + n.toString() + " = " + X.toString();
+    MediaF = "\\frac{" + temp.toString() + "}{" + n.toString() + "} = " + X.toString();
 }
 
 function GetXiDiffXAbs() {
@@ -124,7 +124,7 @@ function GetMe() {
         }
     }
     Me = Math.round((Li + ((n/2 - Fi[i - 1])/fi[i])*ic)*100)/100;
-    MedianaF = Li.toString() + "+((" + n.toString() +"/2) - " + Fi[i - 1].toString() +")/" + fi[i].toString() + ")*" + ic.toString() + " = " + Me.toString();
+    MedianaF = Li.toString() + "+\\Big(\\frac{\\frac{" + n.toString() +"}{2} - " + Fi[i - 1].toString() +"}{" + fi[i].toString() + "}\\Big)*" + ic.toString() + " = " + Me.toString();
 }
 
 function GetXiDiffMeAbs() {
@@ -142,13 +142,13 @@ function Getfi_XiDiffMeAbs() {
 function GetDx() {
     let temp = fi_XiDiffXAbs.reduce(function(acc, current) {return acc + current;}, 0);
     Dx = Math.round((temp/n)*100)/100;
-    DxF = temp.toString() + "/" + n.toString() + " = " + Dx.toString();
+    DxF = "\\frac{" + temp.toString() + "}{" + n.toString() + "} = " + Dx.toString();
 }
 
 function GetDMe() {
     let temp = Math.round(fi_XiDiffMeAbs.reduce(function(acc, current) {return acc + current;}, 0)*100)/100;
     DMe = Math.round((temp/n) * 100)/100;
-    DMeF = temp.toString() + "/" + n.toString() + " = " + DMe.toString();
+    DMeF = "\\frac{" + temp.toString() + "}{" + n.toString() + "} = " + DMe.toString();
 }
 
 function GetXiDiffXAbsSq() {
@@ -166,19 +166,19 @@ function Getfi_XiDiffXAbsSq() {
 function GetVarianza() {
     let temp = Math.round(fi_XiDiffXAbsSq.reduce(function(acc, current) {return acc + current;}, 0)*100)/100;
     Varianza = Math.round((temp/n) * 100)/100;
-    VarianzaF = temp.toString() + "/" + n.toString() + " = " + Varianza.toString();
+    VarianzaF = "\\frac{" + temp.toString() + "}{" + n.toString() + "} = " + Varianza.toString();
 }
 
 function GetDTipica() {
     let temp = Math.round(fi_XiDiffXAbsSq.reduce(function(acc, current) {return acc + current;}, 0)*100)/100;
     DTipica = Math.round(Math.sqrt(temp/n) * 100)/100;
-    DTipicaF = "√" + temp.toString() + "/" + n.toString() + " = " + DTipica.toString();
+    DTipicaF = "\\sqrt{\\frac{" + temp.toString() + "}{" + n.toString() + "}} = " + DTipica.toString();
 }
 
 function GetMomento1() {
     let temp = Xifi.reduce(function(acc, current) {return acc + current;}, 0);
     Momento1 = Math.round(((temp/n) * ic)*100)/100;
-    Momento1F = temp.toString() + "/" + n.toString() + "*" + ic.toString() + " = " + Momento1.toString();
+    Momento1F = "\\frac{" + temp.toString() + "}{" + n.toString() + "}*" + ic.toString() + " = " + Momento1.toString();
 }
 
 function GetXiSq(limit) {
@@ -212,7 +212,7 @@ function GetMomento2() {
     let temp = fi_XiSq.reduce(function(acc, current) {return acc + current;}, 0);
     let temp2 = fi.slice(0, Momento2Limit).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     Momento2 = Math.round(((temp/temp2)*Math.pow(ic,2))*100)/100;
-    Momento2F = temp.toString() + "/" + temp2.toString() + "*" + Math.pow(ic,2) + " = " + Momento2.toString();
+    Momento2F = "\\frac{" + temp.toString() + "}{" + temp2.toString() + "}*" + Math.pow(ic,2) + " = " + Momento2.toString();
 }
 
 function GetMomento3() {
@@ -220,7 +220,7 @@ function GetMomento3() {
     let temp = fi_XiCube.reduce(function(acc, current) {return acc + current;}, 0);
     let temp2 = fi.slice(0, Momento3Limit).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     Momento3 = Math.round(((temp/temp2)*Math.pow(ic,3))*100)/100;
-    Momento3F = temp.toString() + "/" + temp2.toString() + "*" + Math.pow(ic,3) + " = " + Momento3.toString();
+    Momento3F = "\\frac{" + temp.toString() + "}{" + temp2.toString() + "}*" + Math.pow(ic,3) + " = " + Momento3.toString();
 }
 
 function GetDeltas() {
@@ -238,7 +238,7 @@ function GetMo() {
 
 function GetSesgo() {
     Sesgo = Math.round(((X - Mo)/Varianza)*1000)/1000;
-    SesgoF = X.toString() + "-" + Mo.toString() + "/" + Varianza.toString() + " = " + Sesgo.toString()
+    SesgoF = "\\frac{" + X.toString() + "-" + Mo.toString() + "}{" + Varianza.toString() + "} = " + Sesgo.toString()
 }
 
 function Start(arr, Mom2, Mom3) {
