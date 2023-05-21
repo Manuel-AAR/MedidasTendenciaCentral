@@ -97,7 +97,7 @@ function GetXifi() {
 
 function GetMedia() {
     let temp = Xifi.reduce(function(acc, current) {return acc + current;}, 0);
-    X = temp/n;
+    X = Math.round((temp/n)*100)/100;
     MediaF = temp.toString() + "/" + n.toString() + " = " + X.toString();
 }
 
@@ -123,7 +123,7 @@ function GetMe() {
             break;
         }
     }
-    Me = Li + ((n/2 - Fi[i - 1])/fi[i])*ic;
+    Me = Math.round((Li + ((n/2 - Fi[i - 1])/fi[i])*ic)*100)/100;
     MedianaF = Li.toString() + "+((" + n.toString() +"/2) - " + Fi[i - 1].toString() +")/" + fi[i].toString() + ")*" + ic.toString() + " = " + Me.toString();
 }
 
@@ -141,7 +141,7 @@ function Getfi_XiDiffMeAbs() {
 
 function GetDx() {
     let temp = fi_XiDiffXAbs.reduce(function(acc, current) {return acc + current;}, 0);
-    Dx = temp/n;
+    Dx = Math.round((temp/n)*100)/100;
     DxF = temp.toString() + "/" + n.toString() + " = " + Dx.toString();
 }
 
@@ -164,13 +164,13 @@ function Getfi_XiDiffXAbsSq() {
 }
 
 function GetVarianza() {
-    let temp = fi_XiDiffXAbsSq.reduce(function(acc, current) {return acc + current;}, 0);
+    let temp = Math.round(fi_XiDiffXAbsSq.reduce(function(acc, current) {return acc + current;}, 0)*100)/100;
     Varianza = Math.round((temp/n) * 100)/100;
     VarianzaF = temp.toString() + "/" + n.toString() + " = " + Varianza.toString();
 }
 
 function GetDTipica() {
-    let temp = fi_XiDiffXAbsSq.reduce(function(acc, current) {return acc + current;}, 0);
+    let temp = Math.round(fi_XiDiffXAbsSq.reduce(function(acc, current) {return acc + current;}, 0)*100)/100;
     DTipica = Math.round(Math.sqrt(temp/n) * 100)/100;
     DTipicaF = "√" + temp.toString() + "/" + n.toString() + " = " + DTipica.toString();
 }
