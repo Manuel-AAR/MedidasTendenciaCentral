@@ -9,7 +9,7 @@ var Dx = 0.0, DMe = 0.0, DTipica = 0.0, Varianza = 0.0;
 var X = 0.0, Me = 0.0, Mo = 0.0; //X = Media, Me = Mediana, Mo = Moda
 var Delta1 = 0.0, Delta2 = 0.0, Sesgo = 0.0;
 var Momento1 = 0.0, Momento2 = 0.0, Momento3 = 0.0;
-var Momento2Limit = 0.0, Momento3Limit = 0.0;
+var Momento1Limit = 0.0, Momento2Limit = 0.0, Momento3Limit = 0.0;
 var XiDiffXAbs = [], XiDiffXAbsSq = []; //XiDiffXAbs = |Xi - X|, XiDiffXAbsSq = |Xi - X|²
 var fi_XiDiffXAbs = [], fi_XiDiffXAbsSq = []; //fi_XiDiffXAbs = fi|Xi - X|, fi_XiDiffXAbsSq = fi|Xi - X|²
 var XiDiffMeAbs = [], fi_XiDiffMeAbs = []; //XiDiffMeAbs = |Xi - Me|, fi_XiDiffMeAbs = fi|Xi - Me|
@@ -177,8 +177,15 @@ function GetDTipica() {
 
 function GetMomento1() {
     let temp = Xifi.reduce(function(acc, current) {return acc + current;}, 0);
-    Momento1 = Math.round(((temp/n) * ic)*100)/100;
-    Momento1F = "\\frac{" + temp.toString() + "}{" + n.toString() + "}*" + ic.toString() + " = " + Momento1.toString();
+    if (Momento1Limit == 0) {
+        Momento1 = Math.round(((temp/n) * ic)*100)/100;
+        Momento1F = "\\frac{" + temp.toString() + "}{" + n.toString() + "}*" + ic.toString() + " = " + Momento1.toString();
+    } else {
+        let temp2 = fi.slice(0, Momento1Limit).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        Momento1 = Math.round(((temp/temp2) * ic)*100)/100;
+        Momento1F = "\\frac{" + temp.toString() + "}{" + temp2.toString() + "}*" + ic.toString() + " = " + Momento1.toString();
+    }
+    
 }
 
 function GetXiSq(limit) {
@@ -241,11 +248,12 @@ function GetSesgo() {
     SesgoF = "\\frac{" + X.toString() + "-" + Mo.toString() + "}{" + Varianza.toString() + "} = " + Sesgo.toString()
 }
 
-function Start(arr, Mom2, Mom3) {
-    if(arr === undefined || Mom2 == undefined || Mom3  == undefined) {
+function Start(arr, Mom1, Mom2, Mom3) {
+    if(arr === undefined || Mom1 ==undefined || Mom2 == undefined || Mom3  == undefined) {
         return "datos invalidos";
     }
     valores = arr;
+    Momento1Limit = Mom1;
     Momento2Limit = Mom2;
     Momento3Limit = Mom3;
     Ordenar();

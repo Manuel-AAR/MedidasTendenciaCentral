@@ -13,27 +13,48 @@
     <script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>
     var values;
+    var limit1;
     var limit2;
     var limit3;
     var pattern = /^[0-9,]+$/;
     var html = "";
 
     $(document).ready(function () {
+
+
+        $("#useMomento1").click(function () {
+            if (!$("#useMomento1").prop("checked")) {
+                $("#Momento1").val(0);
+                $("#Momento1").prop("disabled", true);
+                $("#Momento1").css("background-color", "var(--nav-bar)");
+                
+            } else {
+                $("#Momento1").prop("disabled", false);
+                $("#Momento1").css("background-color", "var(--primary)");
+            }
+            
+        });
         
 
         $("#Calcular").click(function () {
-            if ($("#values").val() != "" && $("#Momento2").val() != 0 && $("#Momento3").val() != 0 && pattern.test($("#values").val())) {
-                $("#Calcular").prop("disabled", true);
-                values = $("#values").val().split(",").map(Number);
-                limit2 = Number($("#Momento2").val());
-                limit3 = Number($("#Momento3").val());
-                Start(values, limit2, limit3);
-                $("#form").css("display", "none");
-                $("#result").css("display", "");
-                ShowResults();
-            } else {
-                alert("Revisa los datos, pusiste algo mal:\n\n El recuadro de valores debe contener los valores a calcular separados por comas (deben estar separados por comas y no puede haber letras)\n\n 'Momento 2 hasta' y 'Momento 3 hasta' deben tener los valores hasta los cuales se calcularan los momentos (no pueden ser 0)");
-            }
+            if ($("#values").val() != "" && (($("#Momento1").prop("disabled") && $("#Momento1").val() == 0) || (!$("#Momento1").prop("disabled") && $("#Momento1").val() != 0)) && $("#Momento2").val() != 0 && $("#Momento3").val() != 0 && pattern.test($("#values").val())) {
+                    $("#Calcular").prop("disabled", true);
+                    values = $("#values").val().split(",").map(Number);
+                    limit1 = Number($("#Momento1").val());
+                    limit2 = Number($("#Momento2").val());
+                    limit3 = Number($("#Momento3").val());
+                    if ($("#Momento1").prop("disabled")) {
+                        Start(values, 0, limit2, limit3);
+                    } else {
+                        Start(values, limit1, limit2, limit3);
+                    }
+                    $("#form").css("display", "none");
+                    $("#result").css("display", "");
+                    ShowResults();
+                } else {
+                    alert("Revisa los datos, pusiste algo mal:\n\n El recuadro de valores debe contener los valores a calcular separados por comas (deben estar separados por comas y no puede haber letras)\n\n " + ((!$("#Momento1").prop("disabled"))? "'Momento 1', " : "") + " 'Momento 2' y 'Momento 3' deben tener los valores hasta los cuales se calcularan los momentos (no pueden ser 0)");
+                }
+            
         });
 
     });
@@ -112,7 +133,7 @@
             fontSize: 5
         });
         elemento = document.getElementById("Mom1");
-        LaTex = "\ M_1="+Momento1F;
+        LaTex = (!$("#Momento1").prop("disabled") && $("#Momento1").val() != 0)? "\ M_1,_" + limit1 + "="+Momento1F: "\ M_1="+Momento1F;
         katex.render(LaTex, elemento, {
             throwOnError: false,
             displayMode: true,
@@ -184,7 +205,18 @@
                     <div class="row inputGroup">
                         <div class="col-sm" style="width: 42.5%;margin-left: 5%;">
                             <div class="row">
-                                <label for="Momento2">Momento 2 Hasta:</label>
+                                <label style="width: 50%;" for="useMomento1">Usar Momento 1:</label><input style="width: 30px;margin: auto;height: 30px;" checked type="checkbox" name="useMomento1" id="useMomento1">
+                            </div>
+                            <div class="row">
+                                <label for="Momento1">Momento 1:</label>
+                            </div>
+                            <div class="row">
+                                <input type="number" name="Momento1" id="Momento1" value="0">
+                            </div>
+                        </div>
+                        <div class="col-sm" style="width: 42.5%;margin-left: 5%;">
+                            <div class="row">
+                                <label for="Momento2">Momento 2:</label>
                             </div>
                             <div class="row">
                                 <input type="number" name="Momento2" id="Momento2" value="0">
@@ -192,7 +224,7 @@
                         </div>
                         <div class="col-sm" style="width: 42.5%;margin-left: 5%;margin-right: 5%;">
                             <div class="row">
-                                <label for="Momento3">Momento 3 Hasta:</label>
+                                <label for="Momento3">Momento 3:</label>
                             </div>
                             <div class="row">
                                 <input type="number" name="Momento3" id="Momento3" value="0">
