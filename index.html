@@ -22,6 +22,16 @@
     $(document).ready(function () {
 
 
+        $("#redo").click(function () {
+            Restart();
+            $("#form").css("display", "");
+            $("#result").css("display", "none");
+            $("#redo").css("display", "none");
+            $("#Calcular").prop("disabled", false);
+
+        });
+
+
         $("#useMomento1").click(function () {
             if (!$("#useMomento1").prop("checked")) {
                 $("#Momento1").val(0);
@@ -51,6 +61,8 @@
                     $("#form").css("display", "none");
                     $("#result").css("display", "");
                     ShowResults();
+                    $("#redo").css("display", "");
+                    
                 } else {
                     alert("Revisa los datos, pusiste algo mal:\n\n El recuadro de valores debe contener los valores a calcular separados por comas (deben estar separados por comas y no puede haber letras)\n\n " + ((!$("#Momento1").prop("disabled"))? "'Momento 1', " : "") + " 'Momento 2' y 'Momento 3' deben tener los valores hasta los cuales se calcularan los momentos (no pueden ser 0)");
                 }
@@ -193,6 +205,9 @@
         <div class="col" style="display: flex;align-items: center;">
             <h1 style="margin: 5px;width: 100%;">Medidas de tendencia Central</h1>
             
+        </div>
+        <div id="redo" class="col-sm" style="margin: 5px;padding: 15px;padding-left: 20px;padding-right: 20px;width: 65px;height: 60px;display: none;">
+            <h1 style="width: fit-content;">↻</h1>
         </div>
     </div>
     <div class="row content">    

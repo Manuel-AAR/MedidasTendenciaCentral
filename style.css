@@ -9,6 +9,9 @@
         
 
     }
+    #redo{
+        cursor: pointer;
+    }
     body {
         background-color: var(--secondary);
         color: var(--primary);

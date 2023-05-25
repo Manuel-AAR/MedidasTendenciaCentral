@@ -19,6 +19,28 @@ var RangeF = "", ClaseF = "", IcF = "", MediaF = "", MedianaF = "", MoF = "";
 var DxF = "", DMeF = "", VarianzaF = "", DTipicaF = "";
 var Momento1F = "", Momento2F = "", Momento3F = "", Delta1F = "", Delta2F = "", SesgoF = "";
 
+function Restart() {
+    RangeF = "", ClaseF = "", IcF = "", MediaF = "", MedianaF = "", MoF = "";
+    DxF = "", DMeF = "", VarianzaF = "", DTipicaF = "";
+    Momento1F = "", Momento2F = "", Momento3F = "", Delta1F = "", Delta2F = "", SesgoF = "";
+    valores = [];
+    n = 0.0, r = 0.0, c = 0.0, ic = 0.0;
+    clases = [], Li = 0.0;
+    Xi = [], fi = [], Fi = [], Xifi = [];
+    XiSq = [], XiCube = [];
+    fi_XiSq = [], fi_XiCube = [];
+    Dx = 0.0, DMe = 0.0, DTipica = 0.0, Varianza = 0.0;
+    X = 0.0, Me = 0.0, Mo = 0.0;
+    Delta1 = 0.0, Delta2 = 0.0, Sesgo = 0.0;
+    Momento1 = 0.0, Momento2 = 0.0, Momento3 = 0.0;
+    XiDiffXAbs = [], XiDiffXAbsSq = [];
+    fi_XiDiffXAbs = [], fi_XiDiffXAbsSq = [];
+    XiDiffMeAbs = [], fi_XiDiffMeAbs = [];
+
+
+}
+
+
 //funciones
 function Ordenar() {
     valores.sort((a, b) => a - b);
