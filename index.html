@@ -47,9 +47,12 @@
         
 
         $("#Calcular").click(function () {
-            if ($("#values").val() != "" && (($("#Momento1").prop("disabled") && $("#Momento1").val() == 0) || (!$("#Momento1").prop("disabled") && $("#Momento1").val() != 0)) && $("#Momento2").val() != 0 && $("#Momento3").val() != 0 && pattern.test($("#values").val())) {
+            values = $("#values").val().replace(" ", "");
+            values = values.replace(/\./g, ",");
+            values = values.replace(/,+/g, ",");
+            if ($("#values").val() != "" && (($("#Momento1").prop("disabled") && $("#Momento1").val() == 0) || (!$("#Momento1").prop("disabled") && $("#Momento1").val() != 0)) && $("#Momento2").val() != 0 && $("#Momento3").val() != 0 && pattern.test(values)) {
                     $("#Calcular").prop("disabled", true);
-                    values = $("#values").val().split(",").map(Number);
+                    values = values.split(",").map(Number);
                     limit1 = Number($("#Momento1").val());
                     limit2 = Number($("#Momento2").val());
                     limit3 = Number($("#Momento3").val());
@@ -65,6 +68,7 @@
                     
                 } else {
                     alert("Revisa los datos, pusiste algo mal:\n\n El recuadro de valores debe contener los valores a calcular separados por comas (deben estar separados por comas y no puede haber letras)\n\n " + ((!$("#Momento1").prop("disabled"))? "'Momento 1', " : "") + " 'Momento 2' y 'Momento 3' deben tener los valores hasta los cuales se calcularan los momentos (no pueden ser 0)");
+                    alert(values);
                 }
             
         });

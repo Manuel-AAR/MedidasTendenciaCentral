@@ -77,7 +77,7 @@ function GetClases() {
     let temp = []
     let counter = 0;
     let little = Math.min(...GetSinRepetir());
-    for(let i = 0; i < c; i ++) {
+    while(little + counter <= Math.max(...GetSinRepetir())) {
         for(let j = 0; j < ic; j++) {
             temp.push(little + counter);
             counter++;
@@ -162,7 +162,7 @@ function Getfi_XiDiffMeAbs() {
 }
 
 function GetDx() {
-    let temp = fi_XiDiffXAbs.reduce(function(acc, current) {return acc + current;}, 0);
+    let temp = Math.round(fi_XiDiffXAbs.reduce(function(acc, current) {return acc + current;}, 0)*100)/100;
     Dx = Math.round((temp/n)*100)/100;
     DxF = "\\frac{" + temp.toString() + "}{" + n.toString() + "} = " + Dx.toString();
 }
