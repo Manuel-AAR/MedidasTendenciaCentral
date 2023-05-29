@@ -254,10 +254,22 @@ function GetMomento3() {
 
 function GetDeltas() {
     let mayor =  fi.indexOf(Math.max(...fi));
-    Delta1 = fi[mayor] - fi[mayor-1];
-    Delta2 = fi[mayor] - fi[mayor+1];
-    Delta1F = fi[mayor].toString() + "-" + fi[mayor-1].toString() + " = " + Delta1.toString();
-    Delta2F = fi[mayor].toString() + "-" + fi[mayor+1].toString() + " = " + Delta2.toString();
+    if (mayor == 0) {
+        Delta1 = fi[mayor];
+        Delta1F = fi[mayor].toString() + "- 0 = " + Delta1.toString();
+    } else {
+        Delta1 = fi[mayor] - fi[mayor-1];
+        Delta1F = fi[mayor].toString() + "-" + fi[mayor-1].toString() + " = " + Delta1.toString();
+    }
+
+    if (mayor == fi.length) {
+        Delta2 = fi[mayor]
+        Delta2F = fi[mayor].toString() + "- 0 = " + Delta2.toString();
+
+    } else {
+        Delta2 = fi[mayor] - fi[mayor+1];
+        Delta2F = fi[mayor].toString() + "-" + fi[mayor+1].toString() + " = " + Delta2.toString();
+    }
 }
 
 function GetMo() {
