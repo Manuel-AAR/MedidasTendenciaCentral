@@ -140,7 +140,7 @@ function GetMe() {
     for(i = 0; i < clases.length; i++) {
         arr_min = Math.min(...clases[i]);
         arr_max = Math.max(...clases[i]);
-        if (arr_min < X && X < arr_max) {
+        if (arr_min <= Math.round(X) && X <= arr_max) {
             Li = arr_min - 0.5;
             break;
         }
